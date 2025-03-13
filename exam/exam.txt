@@ -1,0 +1,210 @@
+Generals
+
+Différence entre GNU et Linux :
+
+	GNU : Projet de logiciels libres (outils, compilateurs).
+
+	Linux : Noyau créé par Linus Torvalds. Les deux ensemble forment un système d’exploitation.
+
+Inventeur de Linux : Linus Torvalds. Autre programme célèbre : Git.
+
+
+
+FileSystem
+
+mkdir assets
+touch assets/img_{1..10}.png
+echo "Hello, world" > assets/du_texte.txt
+for i in {1..10}; do mv assets/img_$i.png assets/img_$i.jpeg; done
+mkdir assets/medias
+mv assets/img_{1..10}.jpeg assets/medias/
+echo '#!/usr/bin/env bash' > assets/script
+echo 'echo "Hello world"' >> assets/script
+chmod +x assets/script
+
+Les formats de fichiers indiquent le type de données (image, texte).
+
+
+
+Commandes
+
+mkdir commandes
+for i in {1..100}; do echo "Ligne $i" >> commandes/too_long; done
+head -n 5 commandes/too_long
+tail -n 7 commandes/too_long
+sort -nr commandes/too_long | head -n 3
+sed -n '42p' commandes/too_long
+sed -i '42s/.*/The Ultimate Question of Life, the Universe and Everything/' commandes/too_long
+echo '#!/usr/bin/env bash' > commandes/script
+echo 'check_argv() { [ -n "$1" ] && return 1 || return 0; }' >> commandes/script
+echo 'check_argv $1' >> commandes/script
+echo 'echo $?' >> commandes/script
+chmod +x commandes/script
+echo 'case $2 in' >> commandes/script
+echo '  hello) echo "Hello!";;' >> commandes/script
+echo '  toto) echo "Toto!";;' >> commandes/script
+echo '  *) echo "Autre chose!";;' >> commandes/script
+echo 'esac' >> commandes/script
+
+La ligne #!/usr/bin/env bash est l'interpréteur Bash. Elle permet d'exécuter le script directement.
+
+Différence if/else et switch :
+
+	if/else : Conditions multiples.
+
+	switch : Comparaison d'une variable à plusieurs valeurs.
+
+
+
+Users
+
+cut -d: -f1 /etc/passwd
+sudo useradd -m Toto
+sudo passwd Toto
+groups Toto
+sudo groupadd shared
+sudo usermod -aG shared Toto
+sudo usermod -aG shared $USER
+sudo visudo
+sudo visudo
+echo 'echo "bienvenue toto"' >> /home/Toto/.bashrc
+
+Préfixe sudo :
+
+	Exécute une commande avec les privilèges root.
+
+	Tous les utilisateurs ne peuvent pas l'utiliser.
+
+Permissions
+
+mkdir shared
+sudo chown Toto:Toto shared
+echo 'echo toto' > shared/owned_by_toto
+sudo chown Toto:Toto shared/owned_by_toto
+chmod +x shared/owned_by_toto
+sudo chmod u+x shared/owned_by_toto
+
+Commandes sudo chmod g+x owned_by_toto et sudo chown root:root owned_by_toto :
+
+	sudo chmod g+x owned_by_toto : Donne les droits d'exécution au groupe pour le fichier.
+
+	sudo chown root:root owned_by_toto : Change le propriétaire et le groupe du fichier à root.
+
+
+
+
+Environnement
+
+mkdir environ
+echo '#!/usr/bin/env bash' > environ/set_env.sh
+echo 'read -p "Choisissez l\'environnement (dev, prod, test): " ENVIRON' >> environ/set_env.sh
+echo 'export ENVIRON' >> environ/set_env.sh
+echo 'echo "Environnement défini à $ENVIRON"' >> environ/set_env.sh
+chmod +x environ/set_env.sh
+python3 -m venv environ/pythonvenv
+source environ/pythonvenv/bin/activate
+pip install flask
+pip freeze > environ/requirements.txt
+echo 'pythonvenv/' > environ/.gitignore
+
+Commandes apt :
+
+	update : Met à jour la liste des paquets.
+
+	upgrade : Met à jour les paquets installés.
+
+	autoclean : Supprime les paquets obsolètes.
+
+	clean : Supprime les paquets téléchargés.
+
+	autoremove : Supprime les paquets inutilisés.
+
+	purge : Supprime les paquets et leurs fichiers de configuration.
+
+
+
+
+Systemctl
+
+sudo systemctl daemon-reload
+sudo systemctl start <service>
+sudo systemctl stop <service>
+sudo systemctl restart <service>
+
+Commandes systemctl :
+
+	daemon-reload : Prend en compte les changements.
+
+	start/stop : Démarre/arrête un service.
+
+	restart : Redémarre un service.
+
+
+
+
+Cron
+
+crontab -l
+crontab -e
+
+Tâches cron :
+
+	crontab -l : Lister les tâches.
+
+	crontab -e : Éditer les tâches.
+
+
+
+
+Logs
+
+echo '#!/usr/bin/env bash' > logs.sh
+echo 'echo "$(whoami) $(date)" >> logs' >> logs.sh
+chmod +x logs.sh
+sudo journalctl --vacuum-size=200M
+sudo nano /etc/logrotate.d/nginx
+
+Niveaux de logs :
+
+	emergency, alert, critical, error, warning, notice, info, debug.
+
+
+
+
+Web
+
+sudo ufw enable
+sudo ufw disable
+sudo ufw status
+
+Différence HTTP et HTTPS :
+
+	HTTP : Non sécurisé.
+
+	HTTPS : Sécurisé avec SSL/TLS.
+
+Programmes pour requêtes HTTP :
+
+	curl, wget.
+
+Ports réservés :
+
+	80 : HTTP, 22 : SSH, 443 : HTTPS.
+
+Pare-feu :
+
+	ufw enable/disable : Activer/désactiver.
+
+	ufw status : Lister les règles.
+
+Nginx :
+
+	Serveur web et proxy inverse.
+
+MVC :
+
+	Modèle-Vue-Contrôleur. Sépare les données, l'interface, et la logique.
+
+CRUD :
+
+	Create, Read, Update, Delete. Opérations de base pour les données.
