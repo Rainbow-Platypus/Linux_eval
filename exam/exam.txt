@@ -24,6 +24,12 @@ chmod +x assets/script
 
 Les formats de fichiers indiquent le type de données (image, texte).
 
+Oui, pour aller un peu plus loin :
+Sur windows cela permet à l'ordinateur de savoir avec quel programme il peut ouvrir le fichier, mais sur Linux c'est surtout l'en tête du fichier qui sert à cela.
+Par contre dans certains cas cela aide le programme lancé pour lire le fichier
+Un bon exemple est la manière dont certaines applications graphiques ou multimédias sous Linux se comportent :
+Si on essaiee d’ouvrir un fichier .jpg avec un éditeur de texte comme nano, il ne prendra pas en compte l’extension et affichera du texte illisible.
+Par contre, si on le renomme en .txt et qu'on tente de l’ouvrir avec "Eye of GNOME" (visionneuse d'images), il refusera de le charger.
 
 
 Commandes
@@ -48,17 +54,36 @@ echo 'esac' >> commandes/script
 
 La ligne #!/usr/bin/env bash est l'interpréteur Bash. Elle permet d'exécuter le script directement.
 
+Pour aller un peu plus loin : 
+Avec ./script, le noyau lit la première ligne pour déterminer quel interpréteur lancer et transmet le script en argument.
+La présence des permissions d'exécution est indispensable car le système vérifie que le fichier est exécutable.
+En lançant le script avec la commande bash script, vous invoquez directement Bash pour qu’il interprète le contenu du fichier.
+Dans ce cas, la ligne shebang est ignorée et il n’est pas nécessaire que le fichier possède les droits d’exécution.
+Bash lit simplement le contenu du fichier grâce aux permissions de lecture.
+
 Différence if/else et switch :
 
 	if/else : Conditions multiples.
 
 	switch : Comparaison d'une variable à plusieurs valeurs.
 
+Oui,
+Un if/else vérifie les conditions l'une après l'autre de manière linéaire.
+Concrètement faits on aura tendance à utiliser un switch quand tous les cas on à peu près autant de chance d'arriver,
+Alors qu'avec un if/else if on vérifie des conditions spécifiques (de la plus probable à la moins probable).
+
+Niveau algo, sauf optimisation spécifique, if/else if/else sera linéaire O(n)
+Pour un switch pareil cela dépend de l'implémentation du compilateur mais à priori il va générer une jump table et l'algo sera donc en O(1), similiaire à une hash table.
 
 
 Users
 
 cut -d: -f1 /etc/passwd
+Au lieu d'afficher le contenu du fichier brut, on préferera souvent utiliser getent passwd (qui utilise la base de données systeme).
+On abstrait le fait que les utilisateus sont stockés dans un fichier pour ne pas être tenté de modifier le fichier directement au lieu des programmes comme useradd etc (et donc de faire des erreurs potentielles).
+Encore une fois cela dépendra toujours du contexte et de ce que vous êtes en train de faire.
+
+
 sudo useradd -m Toto
 sudo passwd Toto
 groups Toto
@@ -139,6 +164,9 @@ Commandes systemctl :
 
 	restart : Redémarre un service.
 
+Du coup on utilisera restart surtout dans les cas où on veut simplement prendre en compte des modifications de configuration.
+A noter que restart de stop pas complètement le process, cela peut avoir une grosse importance, par exemple pour un service
+de gestion de base de données tel que Postgres, stop + start créera une nouvelle connection à la base et pas restart. 
 
 
 
